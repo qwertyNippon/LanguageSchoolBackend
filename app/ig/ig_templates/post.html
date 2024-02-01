@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+<h1>Post by : {{p.author.username}}</h1>
+
+<div class="container">
+
+    <div class="card" style="width: 18rem;">
+        <img src="{{p.img_url}}" class="card-img-top" alt="{{p.title}}">
+        <div class="card-body">
+            <h5 class="card-title">{{p.title}}</h5>
+            <p class="card-text">{{p.body}}</p>
+            <p class="card-text">{{p.author.username}}</p>
+            <p class="card-text">{{ moment(p.date_created).fromNow() }}</p>
+            <p class="card-text">Likes: {{p.likes}}</p>
+
+            {% if p.user_id == current_user.id %}
+            <a href="/post/update/{{p.id}}" class="btn btn-warning">Update</a>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Delete
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Delete, are you sure?</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            This action cannot be undone. . .
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <a href="{{url_for('ig.delete_post', post_id=p.id)}}" class="btn btn-danger">delete. . .
+                                FOREVER</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% elif p.user_id != current_user.id %}
+                {% if p.like_flag %}
+                <a href="/post/unlike/{{p.id}}" class="btn btn-warning">UNLike!</a>
+
+                {% else %}
+
+                <a href="/post/like/{{p.id}}" class="btn btn-primary">Like!</a>
+                {% endif %}
+
+            
+
+            {% endif %}
+        </div>
+    </div>
+
+</div>
+{% endblock %}

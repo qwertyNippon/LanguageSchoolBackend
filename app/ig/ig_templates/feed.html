@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+<h1>Your feed:</h1>
+
+<div class="container">
+
+  {% for p in posts %}
+  <div class="card" style="width: 18rem;">
+    <a href="{{url_for('ig.ind_post', post_id=p.id)}}"><img src="{{p.img_url}}" class="card-img-top"
+        alt="{{p.title}}"></a>
+    <div class="card-body">
+      <h5 class="card-title">{{p.title}}</h5>
+      <p class="card-text">{{p.body}}</p>
+      <p class="card-text">{{p.author.username}}</p>
+      <p class="card-text">{{ moment(p.date_created).fromNow() }}</p>
+      <p class="card-text">Likes: {{p.likes}}</p>
+    </div>
+    <a href="/post/like/{{p.id}}" class="btn btn-primary">Like!</a>
+  </div>
+
+  {% endfor %}
+
+</div>
+{% endblock %}

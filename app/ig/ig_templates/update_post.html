@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Update the post--</h2>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <form method="POST" class="col-5">
+           {{ form.hidden_tag() }}
+
+                {{ form.title(class='form-control', placeholder="Title", value=post.title) }}
+                {{ form.body(class='form-control', placeholder="Body of Post", value=post.body) }}
+                {{ form.img_url(class='form-control', placeholder="Image URL", value=post.img_url) }}
+                {{ form.submit(class='btn btn-primary') }}
+
+        </form>
+    </div>
+</div>
+{% endblock %}
