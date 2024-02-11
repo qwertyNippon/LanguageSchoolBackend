@@ -25,6 +25,15 @@ class MyLessons(db.Model):
     #         lazy = 'dynamic'
     #             )
 
+
+    following = db.relationship('MyLessons',
+        primaryjoin = (follows.c.followed_by_id==id),
+        secondaryjoin = (follows.c.following_id==id),
+        secondary = follows,
+        backref = db.backref('follows', lazy = 'dynamic'),
+        lazy = 'dynamic'
+    )
+
     def __init__(self, title, body, img_url, user_id):
         self.title = title
         self.body = body
@@ -40,14 +49,6 @@ class MyLessons(db.Model):
 
     def delete_post(self):
         db.session.delete(self)
-        db.session.commit()
-
-    def like_post(self, user):
-        self.liked.append(user)
-        db.session.commit()
-
-    def unlike_post(self, user):
-        self.liked.remove(user)
         db.session.commit()
 
     def to_dict(self):
