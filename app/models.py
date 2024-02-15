@@ -35,8 +35,8 @@ follows = db.Table(
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
-    teacher = db.column(db.Boolean, default=False)
-    student = db.column(db.Boolean, default=False)
+    teacher = db.Column(db.Boolean, default=False)
+    student = db.Column(db.Boolean, default=False)
     username = db.Column(db.String(50), nullable=False, unique=True)
     email = db.Column(db.String, nullable=False, unique=True)
     password = db.Column(db.String, nullable=False)
