@@ -1,8 +1,5 @@
 from flask import Flask
-
-
 from config import Config
-
 from .auth.routes import auth
 from .ig.routes import ig
 from .models import db, User
@@ -11,10 +8,7 @@ from flask_login import LoginManager
 from flask_moment import Moment
 from .api.routes import api
 from .payments.routes import payments
-
 from flask_cors import CORS
-
-
 
 app = Flask(__name__)
 CORS(app)
