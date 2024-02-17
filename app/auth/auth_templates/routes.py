@@ -27,7 +27,7 @@ def register():
             user.save_me()
 
             data = request.get_json()
-            return redirect(url_for('login_user'))
+            return redirect(url_for('Login'))
             # expectation is for the page to change 
             # to the login page oce data is inputted 
             # for the line above.
@@ -45,14 +45,15 @@ def login_user():
     user = User.query.filter_by(username=u).first()
     if user:
         if check_password_hash(user.password, data['pass']):
-            return {
+            {
                 'status':'ok',
                 'message' : 'Logged in!',
                 'data':{
                     'user': user.to_dict(),
                     'token': ''
                 }  
-            }
+            } 
+            return redirect(url_for('Home'))
         else:
             return {
                 'status' : 'NOT ok',
