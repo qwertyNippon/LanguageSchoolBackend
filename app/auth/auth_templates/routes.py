@@ -28,6 +28,9 @@ def register():
 
             data = request.get_json()
             return redirect(url_for('login_user'))
+            # expectation is for the page to change 
+            # to the login page oce data is inputted 
+            # for the line above.
     print(data)
 
     return 'ok'
