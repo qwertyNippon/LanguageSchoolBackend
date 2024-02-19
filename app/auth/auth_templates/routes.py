@@ -43,6 +43,7 @@ def login_user():
     print(data)
     u = data['username']
     user = User.query.filter_by(username=u).first()
+          # User.(model) - query. the data base - filter. it by - 
     if user:
         if check_password_hash(user.password, data['pass']):
             {
