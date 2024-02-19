@@ -28,6 +28,7 @@ def register():
 
             data = request.get_json()
             return redirect(url_for('Login'))
+            # return redirect(url_for('login_user'))
             # expectation is for the page to change 
             # to the login page oce data is inputted 
             # for the line above.
@@ -43,7 +44,8 @@ def login_user():
     print(data)
     u = data['username']
     user = User.query.filter_by(username=u).first()
-          # User.(model) - query. the data base - filter. it by - 
+        # User.(model) - query. the data base - filter. it by - .first finds the first. 
+        # you can do .all or .limit. It gives instruction for the search. It needs something on the end.
     if user:
         if check_password_hash(user.password, data['pass']):
             {
@@ -55,6 +57,7 @@ def login_user():
                 }  
             } 
             return redirect(url_for('Home'))
+            # return redirect(url_for('Home'))
         else:
             return {
                 'status' : 'NOT ok',
