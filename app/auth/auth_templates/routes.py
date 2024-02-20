@@ -56,6 +56,7 @@ def login_user():
                     'token': ''
                 }  
             } 
+            login_user(user)
             return redirect(url_for('Home'))
             # return redirect(url_for('Home'))
         else:
