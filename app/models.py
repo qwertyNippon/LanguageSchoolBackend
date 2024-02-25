@@ -47,7 +47,7 @@ class User(db.Model, UserMixin):
     # p3.author
     # or user.post ====> [p321, p5464564, etc. . . ]
 
-    following = db.relationship('User',
+    following = db.relationship('User', 
             primaryjoin = (follows.c.followed_by_id==id),
             secondaryjoin = (follows.c.following_id==id),
             secondary = follows,

@@ -1,7 +1,8 @@
 from flask import Flask
 from config import Config
 from .auth.routes import auth
-# from .ig.routes import ig
+# from .myLessons.routes import myLessons
+# from .myMessages.routes import myMessages
 from .models import db, User
 from flask_migrate import Migrate
 from flask_login import LoginManager
@@ -32,6 +33,8 @@ login.login_view = 'auth.login'
 moment = Moment(app)
 
 app.register_blueprint(auth)
+# app.register_blueprint(myLessons)
+# app.register_blueprint(myMessages)
 # app.register_blueprint(ig)
 # app.register_blueprint(api)
 # app.register_blueprint(payments)

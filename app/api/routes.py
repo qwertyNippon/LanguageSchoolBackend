@@ -1,9 +1,23 @@
-# from flask import Blueprint, request, json
+from flask import Blueprint, request, json
 
-# from ..models import Post, Movie, Bikes
+from ..models import Post, Movie, Bikes
+from ..models import User
 
 
-# api = Blueprint('api', __name__, url_prefix='/api')
+api = Blueprint('api', __name__, url_prefix='/api')
+
+
+# ********TESTING
+@api.get('/home')
+def user_info_fetch():
+    print(request)
+    data = request.get_json()
+    print(data)
+    return {
+        'status' : 'ok',
+        'fetch_msg': 'Fetch works too!',
+        'data': data
+    }
 
 # @api.get('/posts') 
 # def get_posts():
