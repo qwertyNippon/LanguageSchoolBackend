@@ -1,5 +1,5 @@
 from flask import Blueprint, request, json
-
+from flask import Flask, request, jsonify
 from ..models import Post, Movie, Bikes
 from ..models import User
 
@@ -18,6 +18,7 @@ def user_info_fetch():
         'fetch_msg': 'Fetch works too!',
         'data': data
     }
+
 
 # @api.get('/posts') 
 # def get_posts():

@@ -21,15 +21,15 @@ socketio = SocketIO(app)
 
 # ****************
 
-@app.route('/')
+@app.route('/Classroom')
 def index():
     # Redirect to a unique room ID
-    return redirect('/' + str(uuid.uuid4()))
+    return redirect('/Classroom/' + str(uuid.uuid4()))
 
-@app.route('/some_other_route')
-def some_other_route():
+# @app.route('/some_other_route')
+# def some_other_route():
     # Implement the logic for this route
-    return "This is some other route"
+    # return "This is some other route"
 
 if __name__ == '__main__':
     socketio.run(app)
