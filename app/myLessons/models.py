@@ -1,37 +1,26 @@
-from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-
-db = SQLAlchemy()
-
+from app import db
 
 follows = db.Table(
     'follows',
     db.Column('followed_by_id', db.Integer, db.ForeignKey('user.id'), nullable=False),
-    db.Column('following_id',db.Integer, db.ForeignKey('user.id'), nullable=False)
+    db.Column('following_id', db.Integer, db.ForeignKey('user.id'), nullable=False)
 )
-
-
 
 class MyLessons(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String, nullable=False)
     body = db.Column(db.String)
     img_url = db.Column(db.String)
-    date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow())
+    date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    # liked = db.relationship('User',
-    #         secondary = 'likes',
-    #         backref = 'liked',
-    #         lazy = 'dynamic'
-    #             )
 
-
-    following = db.relationship('MyLessons',
-        primaryjoin = (follows.c.followed_by_id==id),
-        secondaryjoin = (follows.c.following_id==id),
-        secondary = follows,
-        backref = db.backref('follows', lazy = 'dynamic'),
-        lazy = 'dynamic'
+    following = db.relationship('User',
+        primaryjoin=(follows.c.followed_by_id == id),
+        secondaryjoin=(follows.c.following_id == id),
+        secondary=follows,
+        backref=db.backref('follows', lazy='dynamic'),
+        lazy='dynamic'
     )
 
     def __init__(self, title, body, img_url, user_id):
