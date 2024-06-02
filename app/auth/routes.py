@@ -55,5 +55,5 @@ def login():
 def logout():
     flash('you\'re logged out, have a great day!', 'secondary')
     logout_user()
-    return redirect(url_for('land'))
+    return redirect(url_for('http://localhost:5173/'))
 

@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Hello, world!</h1>
+
+<div class="container">
+
+    <div class="row justify-content-center">
+        <div class="card" style="width: 18rem;">
+            <div class="card-header">
+                Users:
+            </div>
+            <ul class="list-group list-group-flush"></ul>
+
+
+
+            {% for u in u_list %}
+
+
+            {% if u.username == current_user.username %}
+            {% elif u.flag %}
+
+            <li class="list-group-item">{{u.username}}</li>
+            <a href="/unfollow/{{u.id}}" class="btn btn-danger">UNFollow {{u.username}}!</a>
+
+            {% else %}
+            <li class="list-group-item">{{u.username}}</li>
+            <a href="/follow/{{u.id}}" class="btn btn-success">Follow {{u.username}}!</a>
+
+            {% endif %}
+
+
+
+            {% endfor %}
+
+
+
+            </ul>
+
+
+            
+        
+            
+        </div>
+
+
+    </div>
+</div>
+{% endblock %}

@@ -22,7 +22,7 @@ def land():
         
         
 
-    # return render_template('index.html', u_list=user_list)
+    return render_template('index.html', u_list=user_list)
 
 
 # @app.route("/@me")
