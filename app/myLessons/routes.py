@@ -58,7 +58,7 @@ def room():
 def handle_message(data):
     room = session.get("room")
     if room not in rooms:
-        return 
+        return
 
     content = {
         "name": session.get("name"),
