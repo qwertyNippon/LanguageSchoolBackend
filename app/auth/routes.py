@@ -35,4 +35,4 @@ def login():
 @auth.route('/logout')
 def logout():
     logout_user()
-    return redirect('http://localhost:5173/')
+    return redirect('http://localhost:5173/Home')
