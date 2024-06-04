@@ -28,11 +28,11 @@ def login():
     user = User.query.filter_by(username=user_name).first()
     if user and check_password_hash(user.password, password):
         login_user(user)
-        return jsonify({"message": "Login successful"}), 200
+        return jsonify({"message": "authenticated", "data": {"username": user.username, "email": user.email}}), 200
     else:
         return jsonify({"message": "Invalid credentials"}), 401
 
-@auth.route('/logout')
+@auth.route('/logout', methods=['POST'])
 def logout():
     logout_user()
-    return redirect('http://localhost:5173/Home')
+    return jsonify({"message": "Logged out successfully"}), 200
