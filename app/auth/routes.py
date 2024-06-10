@@ -6,7 +6,7 @@ from werkzeug.security import check_password_hash
 from datetime import datetime
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash
-# from ...app import db  
+from app import db
 # Import db from app module
 
 auth = Blueprint('auth', __name__, template_folder='auth_templates')
