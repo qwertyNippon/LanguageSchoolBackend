@@ -7,6 +7,8 @@ from flask_login import LoginManager
 from flask_moment import Moment
 from flask_cors import CORS
 from flask_socketio import SocketIO
+from flask_session import Session
+# from .auth.routes import auth
 import uuid
 
 # Initialize the Flask application
@@ -21,31 +23,35 @@ migrate = Migrate(app, db)
 login = LoginManager(app)
 login.login_view = 'auth.login'
 moment = Moment(app)
+Session(app)
 
 # Blueprints
 from .auth.routes import auth
 from .myLessons.routes import myLessons
+from .profile.routes import bp as profile_bp  # Import the profile blueprint
 # from .myMessages.routes import myMessages
 # from .api.routes import api
 # from .payments.routes import payments
 
 app.register_blueprint(auth)
 app.register_blueprint(myLessons, url_prefix='/myLessons')
+app.register_blueprint(profile_bp, url_prefix='/profile')  # Register the profile blueprint
+
 # app.register_blueprint(myMessages)
 # app.register_blueprint(api)
 # app.register_blueprint(payments)
-
-# SocketIO routes
-@app.route('/Classroom')
-def index():
-    # Redirect to a unique room ID
-    return redirect('/Classroom/' + str(uuid.uuid4()))
 
 # User loader callback for Flask-Login
 
 @login.user_loader
 def load_user(user_id):
     return User.query.get(user_id)
+
+# SocketIO routes
+@app.route('/Classroom')
+def index():
+    # Redirect to a unique room ID
+    return redirect('/Classroom/' + str(uuid.uuid4()))
 
 # Import routes and models at the end to avoid circular imports
 from . import routes

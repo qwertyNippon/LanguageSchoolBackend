@@ -7,7 +7,7 @@ class Profile(db.Model):
     username = db.Column(db.String(50), nullable=False, unique=True)
     firstname = db.Column(db.String(50), nullable=False, unique=False)
     lastname = db.Column(db.String(50), nullable=False, unique=False)
-    email = db.Column(db.String, nullable=False, unique=True)
+    email = db.Column(db.String(120), nullable=False, unique=True)  # Added length to email field
     bio = db.Column(db.String(300), nullable=True, unique=False)
     certz = db.Column(db.String(300), nullable=True, unique=False)
     language = db.Column(db.String(100), nullable=True, unique=False)
@@ -25,8 +25,10 @@ class Student(db.Model):
 
     def to_dict(self):
         return {
-            'name': self.profile.firstname,  # Use firstname from Profile
-            'avatarUrl': self.profile.photo,  # Use photo from Profile
-            'lessonBalance': self.lesson_balance,
-            'isSelected': self.is_selected,
+            'id': self.id,
+            'profile_id': self.profile_id,
+            'lesson_balance': self.lesson_balance,
+            'is_selected': self.is_selected,
+            'name': self.profile.firstname,  # Assuming you want to include the profile's firstname
+            'avatarUrl': self.profile.photo  # Assuming you want to include the profile's photo
         }
