@@ -14,6 +14,8 @@ import uuid
 # Initialize the Flask application
 app = Flask(__name__)
 CORS(app)
+# cors = CORS(app, resources={r"/*": {"origins": "*"}}) 
+# change above back when fixed
 socketio = SocketIO(app)
 app.config.from_object(Config)
 
@@ -52,6 +54,16 @@ def load_user(user_id):
 def index():
     # Redirect to a unique room ID
     return redirect('/Classroom/' + str(uuid.uuid4()))
+
+@app.route('/test_redis')
+def test_redis():
+    try:
+        redis_client = app.config['SESSION_REDIS']
+        redis_client.set('foo', 'bar')
+        value = redis_client.get('foo')
+        return f'Redis is working: {value}'
+    except Exception as e:
+        return f'Redis connection failed: {e}'
 
 # Import routes and models at the end to avoid circular imports
 from . import routes

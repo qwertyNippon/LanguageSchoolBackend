@@ -7,13 +7,15 @@ from datetime import datetime
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash
 from app import db
+from ..models import User
 # Import db from app module
 
 auth = Blueprint('auth', __name__, template_folder='auth_templates')
 
 @auth.route('/register', methods=['POST'])
 def register():
-    from ..models import User  # Import User locally
+    # from ..models import User  
+    # Import User locally
     data = request.get_json()
     username = data.get('username')
     email = data.get('email')
@@ -26,7 +28,8 @@ def register():
 
 @auth.route('/login', methods=['POST'])
 def login():
-    from ..models import User  # Import User locally
+    # from ..models import User 
+    # Import User locally
     data = request.get_json()
     user_name = data.get('username')
     password = data.get('password')

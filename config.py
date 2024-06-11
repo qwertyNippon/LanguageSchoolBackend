@@ -21,3 +21,5 @@ class Config:
     SESSION_USE_SIGNER = True
     # SESSION_REDIS = redis.from_url("redis://127.0.0.1:5000")
     SESSION_REDIS = redis.from_url("redis://127.0.0.1:6379")
+    # CORS_ENABLED = False
+    # CORS_ENABLED = True
