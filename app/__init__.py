@@ -14,8 +14,6 @@ import uuid
 # Initialize the Flask application
 app = Flask(__name__)
 CORS(app)
-# cors = CORS(app, resources={r"/*": {"origins": "*"}}) 
-# change above back when fixed
 socketio = SocketIO(app)
 app.config.from_object(Config)
 
