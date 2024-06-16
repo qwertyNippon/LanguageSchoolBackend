@@ -1,5 +1,6 @@
 # profile/routes.py
 from flask import Blueprint, request, jsonify
+from flask_login import login_required, current_user
 from werkzeug.utils import secure_filename
 import os
 # from .. import db
@@ -17,6 +18,7 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @bp.route('/profile', methods=['POST'])
+@login_required
 def save_profile():
     logging.debug('Received request: %s', request.form)
     bio = request.form.get('bio')
@@ -61,6 +63,7 @@ def save_profile_to_database(username, firstname, lastname, email, bio, language
     db.session.commit()
 
 @bp.route('/students/selected', methods=['GET'])
+@login_required
 def get_selected_students():
     # Query to get selected students
     selected_students = Student.query.filter_by(is_selected=True).all()

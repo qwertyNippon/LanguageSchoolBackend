@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request
 from models import db, Student, Profile
 from ..profile.models import Profile
+from flask_login import login_required, current_user
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///students.db'
@@ -8,11 +9,13 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 
 @app.route('/students', methods=['GET'])
+@login_required
 def get_students():
     students = Student.query.all()
     return jsonify([student.to_dict() for student in students])
 
 @app.route('/students', methods=['POST'])
+@login_required
 def add_student():
     data = request.get_json()
     profile = Profile.query.filter_by(id=data['profile_id']).first()
@@ -28,6 +31,7 @@ def add_student():
     return jsonify({'error': 'Profile not found'}), 404
 
 @app.route('/students/<int:student_id>/select', methods=['POST'])
+@login_required
 def select_student(student_id):
     student = Student.query.get(student_id)
     if student:
@@ -40,6 +44,7 @@ def select_student(student_id):
     return jsonify({'error': 'Student not found'}), 404
 
 @app.route('/students/selected', methods=['GET'])
+@login_required
 def get_selected_student():
     student = Student.query.filter_by(is_selected=True).first()
     if student:

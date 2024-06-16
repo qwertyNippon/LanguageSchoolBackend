@@ -18,7 +18,8 @@ def generate_unique_code(length):
             break
     return code
 
-@myLessons.route("/", methods=["POST", "GET"])
+@myLessons.route("/MyLessons", methods=["POST", "GET"])
+@login_required
 def home():
     session.clear()
     if request.method == "POST":

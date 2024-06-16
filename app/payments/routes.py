@@ -2,6 +2,7 @@
 # import json
 # import os
 # import stripe
+# from flask_login import login_required, current_user
 # from ..models import Movie
 
 # payments = Blueprint('payments', __name__, url_prefix='/pay')
@@ -29,6 +30,7 @@
 #     return customer
 
 # @payments.route('/create-payment-intent', methods=['POST'])
+# @login_required
 # def create_payment():
 #     try:
 #         data = json.loads(request.data)
