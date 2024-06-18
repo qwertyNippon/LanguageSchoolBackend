@@ -24,6 +24,7 @@ def save_profile():
     logging.debug('Request method: %s', request.method)
 
     if request.method == 'GET':
+        logging.debug('Current user: %s', current_user.username)
         profile = Profile.query.filter_by(username=current_user.username).first()
         if profile:
             return jsonify({
@@ -102,3 +103,10 @@ def get_selected_students():
     selected_students = Student.query.filter_by(is_selected=True).all()
     students_list = [student.to_dict() for student in selected_students]
     return jsonify(students_list), 200
+
+# @bp.route('/students/selected', methods=['GET'])
+# @login_required
+# def get_selected_students():
+#     selected_students = Student.query.filter_by(is_selected=True).all()
+#     students_list = [student.to_dict() for student in selected_students]
+#     return jsonify(students_list), 200
