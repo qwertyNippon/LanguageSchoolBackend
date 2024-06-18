@@ -1,0 +1,60 @@
+<!-- profile/templates/profile.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+</head>
+<body>
+    <h1>Profile</h1>
+    <form method="POST" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.username.label }}<br>
+            {{ form.username(size=32) }}<br>
+            {{ form.username.errors }}
+        </p>
+        <p>
+            {{ form.firstname.label }}<br>
+            {{ form.firstname(size=32) }}<br>
+            {{ form.firstname.errors }}
+        </p>
+        <p>
+            {{ form.lastname.label }}<br>
+            {{ form.lastname(size=32) }}<br>
+            {{ form.lastname.errors }}
+        </p>
+        <p>
+            {{ form.email.label }}<br>
+            {{ form.email(size=64) }}<br>
+            {{ form.email.errors }}
+        </p>
+        <p>
+            {{ form.bio.label }}<br>
+            {{ form.bio(rows=4, cols=40) }}<br>
+            {{ form.bio.errors }}
+        </p>
+        <p>
+            {{ form.Certz.label }}<br>
+            {{ form.Certz(rows=4, cols=40) }}<br>
+            {{ form.Certz.errors }}
+        </p>
+        <p>
+            {{ form.Language.label }}<br>
+            {{ form.Language(size=32) }}<br>
+            {{ form.Language.errors }}
+        </p>
+        <p>
+            {{ form.Level.label }}<br>
+            {{ form.Level(size=32) }}<br>
+            {{ form.Level.errors }}
+        </p>
+        <p>
+            {{ form.photo.label }}<br>
+            {{ form.photo() }}<br>
+            {{ form.photo.errors }}
+        </p>
+        <p><input type="submit" value="Save"></p>
+    </form>
+</body>
+</html>

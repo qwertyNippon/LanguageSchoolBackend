@@ -1,11 +1,13 @@
 from flask import Flask, jsonify, request
+from config import Config
 from models import db, Student, Profile
 from ..profile.models import Profile
 from flask_login import login_required, current_user
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///students.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///students.db'
+# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config.from_object(Config)
 db.init_app(app)
 
 @app.route('/students', methods=['GET'])

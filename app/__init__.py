@@ -28,7 +28,7 @@ Session(app)
 # Blueprints
 from .auth.routes import auth
 from .myLessons.routes import myLessons
-from .profile.routes import bp as profile_bp  # Import the profile blueprint
+from .profile.routes import bp as profile_bp
 # from .myMessages.routes import myMessages
 # from .api.routes import api
 # from .payments.routes import payments

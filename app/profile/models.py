@@ -23,12 +23,27 @@ class Student(db.Model):
     lesson_balance = db.Column(db.Integer)
     is_selected = db.Column(db.Boolean, default=False)
 
+    def __init__(self, profile_id, lesson_balance=0):
+        self.profile_id = profile_id
+        self.lesson_balance = lesson_balance
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def update(self):
+        db.session.commit()
+
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
     def to_dict(self):
         return {
             'id': self.id,
             'profile_id': self.profile_id,
             'lesson_balance': self.lesson_balance,
             'is_selected': self.is_selected,
-            'name': self.profile.firstname,  # Assuming you want to include the profile's firstname
-            'avatarUrl': self.profile.photo  # Assuming you want to include the profile's photo
+            'name': self.profile.firstname if self.profile else None,  # Assuming you want to include the profile's firstname
+            'avatarUrl': self.profile.photo if self.profile else None  # Assuming you want to include the profile's photo
         }
