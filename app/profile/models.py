@@ -15,6 +15,9 @@ class Profile(db.Model):
     photo = db.Column(db.String(255), nullable=True, unique=False)
     teacher = db.relationship('Teacher', uselist=False, back_populates='profile')
     student = db.relationship('Student', uselist=False, back_populates='profile')
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user = db.relationship('User', back_populates='profile')
+
 
 class Student(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -23,9 +26,11 @@ class Student(db.Model):
     lesson_balance = db.Column(db.Integer)
     is_selected = db.Column(db.Boolean, default=False)
 
-    def __init__(self, profile_id, lesson_balance=0):
+    def __init__(self, profile_id,  firstname, photo, lesson_balance=0,):
         self.profile_id = profile_id
         self.lesson_balance = lesson_balance
+        self.firstname = firstname
+        self.photo = photo
 
     def save(self):
         db.session.add(self)
@@ -44,6 +49,6 @@ class Student(db.Model):
             'profile_id': self.profile_id,
             'lesson_balance': self.lesson_balance,
             'is_selected': self.is_selected,
-            'name': self.profile.firstname if self.profile else None,  # Assuming you want to include the profile's firstname
-            'avatarUrl': self.profile.photo if self.profile else None  # Assuming you want to include the profile's photo
+            'name': self.firstname if self.firstname else None,  # Assuming you want to include the profile's firstname
+            'avatarUrl': self.photo if self.photo else None  # Assuming you want to include the profile's photo
         }
