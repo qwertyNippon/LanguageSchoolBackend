@@ -1,16 +1,15 @@
 # profile/routes.py
-from flask import Blueprint, request, jsonify, render_template
+from flask import Blueprint, request, jsonify, render_template, current_app
 from flask_login import login_required, current_user
 from werkzeug.utils import secure_filename
 import os
-from .models import Profile, Student
+from .models import Profile, Student, User
 from .forms import ProfileForm
 from .. import db
 import logging
 
 bp = Blueprint('profile', __name__, template_folder='profile_templates')
 
-UPLOAD_FOLDER = 'uploads'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 logging.basicConfig(level=logging.DEBUG)
@@ -54,12 +53,14 @@ def save_profile():
             level = form.Level.data
             certz = form.Certz.data
 
+            photo_path = None
             if form.photo.data and allowed_file(form.photo.data.filename):
                 filename = secure_filename(form.photo.data.filename)
-                photo_path = os.path.join(UPLOAD_FOLDER, filename)
+                upload_folder = current_app.config['UPLOAD_FOLDER']
+                if not os.path.exists(upload_folder):
+                    os.makedirs(upload_folder)
+                photo_path = os.path.join(upload_folder, filename)
                 form.photo.data.save(photo_path)
-            else:
-                photo_path = None
 
             save_profile_to_database(username, firstname, lastname, email, bio, language, level, certz, photo_path)
             return jsonify({'message': 'Profile saved successfully'}), 200
@@ -103,10 +104,3 @@ def get_selected_students():
     selected_students = Student.query.filter_by(is_selected=True).all()
     students_list = [student.to_dict() for student in selected_students]
     return jsonify(students_list), 200
-
-# @bp.route('/students/selected', methods=['GET'])
-# @login_required
-# def get_selected_students():
-#     selected_students = Student.query.filter_by(is_selected=True).all()
-#     students_list = [student.to_dict() for student in selected_students]
-#     return jsonify(students_list), 200
