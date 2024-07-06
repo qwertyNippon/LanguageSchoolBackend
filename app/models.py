@@ -25,6 +25,7 @@ class User(db.Model, UserMixin):
                                 backref=db.backref('follows', lazy='dynamic'),
                                 lazy='dynamic'
                                 )
+    profile = db.relationship('Profile', uselist=False, back_populates='user')
 
     def __init__(self, username, email, password):
         self.username = username
@@ -72,10 +73,10 @@ class MyLessons(db.Model):
         return {
             'title': self.title,
             'body': self.body,
-            'img' : self.img_url,
+            'img': self.img_url,
             'date_created': self.date_created,
             'user_id': self.user_id,
-            'author' : self.author.username
+            'author': self.author.username
         }
 
 class Teacher(db.Model):
@@ -107,7 +108,7 @@ class Teacher(db.Model):
             'name': self.profile.firstname if self.profile else None,  # Assuming you want to include the profile's firstname
             'avatarUrl': self.profile.photo if self.profile else None  # Assuming you want to include the profile's photo
         }
-    
+
 class Student(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     profile_id = db.Column(db.Integer, db.ForeignKey('profile.id'), nullable=False)
@@ -139,7 +140,7 @@ class Student(db.Model):
             'name': self.profile.firstname if self.profile else None,  # Assuming you want to include the profile's firstname
             'avatarUrl': self.profile.photo if self.profile else None  # Assuming you want to include the profile's photo
         }
-    
+
 class Profile(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(50), nullable=False, unique=True)
@@ -153,3 +154,43 @@ class Profile(db.Model):
     photo = db.Column(db.String(255), nullable=True, unique=False)
     teacher = db.relationship('Teacher', uselist=False, back_populates='profile')
     student = db.relationship('Student', uselist=False, back_populates='profile')
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user = db.relationship('User', back_populates='profile')
+
+    def __init__(self, username, firstname, lastname, email, bio=None, certz=None, language=None, level=None, photo=None, user_id=None):
+        self.username = username
+        self.firstname = firstname
+        self.lastname = lastname
+        self.email = email
+        self.bio = bio
+        self.certz = certz
+        self.language = language
+        self.level = level
+        self.photo = photo
+        self.user_id = user_id
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def update(self):
+        db.session.commit()
+
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'username': self.username,
+            'firstname': self.firstname,
+            'lastname': self.lastname,
+            'email': self.email,
+            'bio': self.bio,
+            'certz': self.certz,
+            'language': self.language,
+            'level': self.level,
+            'photo': self.photo,
+            'user_id': self.user_id
+        }
